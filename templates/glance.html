@@ -1,0 +1,177 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<script type="text/javascript" xmlns="http://www.w3.org/1999/html">
+    window.onload = function () {
+        var btn = document.getElementById("search-button");
+        if (btn.addEventListener) {
+            btn.addEventListener("click", btnClick, false);
+        } else if (btn.attachEvent) {
+            btn.attachEvent("onclick", btnClick);
+        }
+    };
+    function btnClick() {
+
+        interactive_map_text = document.getElementById("interactive_map_text");
+        interactive_map_text.removeAttribute("hidden");
+        static_view_text = document.getElementById("static_view_text");
+        static_view_text.removeAttribute("hidden");
+        street_view_text = document.getElementById("street_view_text");
+        street_view_text.removeAttribute("hidden");
+
+        city = document.getElementById("search-text");
+
+        let frame = document.getElementById('frame');
+        var iframe = document.createElement("iframe");
+        iframe.src = "https://www.google.com/maps/embed/v1/place?q=" + city.value + "&key=API_KEY"
+        iframe.setAttribute("loading", "lazy");
+        iframe.setAttribute("width", "1000");
+        iframe.setAttribute("height", "1000");
+        frame.innerHTML = '';
+        frame.appendChild(iframe);
+
+        let static_road = document.getElementById('static_road');
+        var static_road_img = document.createElement("img");
+        static_road_img.src = "https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap&center=" + city.value + "&zoom=14&size=500x500&key=API_KEY"
+        static_road_img.setAttribute("loading", "lazy");
+        static_road.innerHTML = '';
+        var static_road_caption = document.createElement("p");
+        static_road_caption.innerHTML = 'Road View';
+        static_road.appendChild(static_road_caption);
+        static_road.appendChild(static_road_img);
+
+        let static_satellite = document.getElementById('static_satellite');
+        var static_satellite_img = document.createElement("img");
+        static_satellite_img.src = "https://maps.googleapis.com/maps/api/staticmap?maptype=satellite&center=" + city.value + "&zoom=14&size=500x500&key=API_KEY"
+        static_satellite_img.setAttribute("loading", "lazy");
+        static_satellite.innerHTML = '';
+        var static_satellite_caption = document.createElement("p");
+        static_satellite_caption.innerHTML = 'Satellite View';
+        static_satellite.appendChild(static_satellite_caption);
+        static_satellite.appendChild(static_satellite_img);
+
+        let static_terrain = document.getElementById('static_terrain');
+        var static_terrain_img = document.createElement("img");
+        static_terrain_img.src = "https://maps.googleapis.com/maps/api/staticmap?maptype=terrain&center=" + city.value + "&zoom=14&size=500x500&key=API_KEY"
+        static_terrain_img.setAttribute("loading", "lazy");
+        static_terrain.innerHTML = '';
+        var static_terrain_caption = document.createElement("p");
+        static_terrain_caption.innerHTML = 'Terrain View';
+        static_terrain.appendChild(static_terrain_caption);
+        static_terrain.appendChild(static_terrain_img);
+
+        let static_hybrid = document.getElementById('static_hybrid');
+        var static_hybrid_img = document.createElement("img");
+        static_hybrid_img.src = "https://maps.googleapis.com/maps/api/staticmap?maptype=hybrid&center=" + city.value + "&zoom=14&size=500x500&key=API_KEY"
+        static_hybrid_img.setAttribute("loading", "lazy");
+        static_hybrid.innerHTML = '';
+        var static_hybrid_caption = document.createElement("p");
+        static_hybrid_caption.innerHTML = 'Hybrid View';
+        static_hybrid.appendChild(static_hybrid_caption);
+        static_hybrid.appendChild(static_hybrid_img);
+
+        let street_north = document.getElementById('street_north');
+        var street_north_img = document.createElement("img");
+        street_north_img.src = "https://maps.googleapis.com/maps/api/streetview?heading=0&size=500x500&location=" + city.value + "&key=API_KEY"
+        street_north_img.setAttribute("loading", "lazy");
+        street_north.innerHTML = '';
+        var street_north_caption = document.createElement("p");
+        street_north_caption.innerHTML = 'North View';
+        street_north.appendChild(street_north_caption);
+        street_north.appendChild(street_north_img);
+
+        let street_east = document.getElementById('street_east');
+        var street_east_img = document.createElement("img");
+        street_east_img.src = "https://maps.googleapis.com/maps/api/streetview?heading=90&size=500x500&location=" + city.value + "&key=API_KEY"
+        street_east_img.setAttribute("loading", "lazy");
+        street_east.innerHTML = '';
+        var street_east_caption = document.createElement("p");
+        street_east_caption.innerHTML = 'East View';
+        street_east.appendChild(street_east_caption);
+        street_east.appendChild(street_east_img);
+
+        let street_south = document.getElementById('street_south');
+        var street_south_img = document.createElement("img");
+        street_south_img.src = "https://maps.googleapis.com/maps/api/streetview?heading=180&size=500x500&location=" + city.value + "&key=API_KEY"
+        street_south_img.setAttribute("loading", "lazy");
+        street_south.innerHTML = '';
+        var street_south_caption = document.createElement("p");
+        street_south_caption.innerHTML = 'South View';
+        street_south.appendChild(street_south_caption);
+        street_south.appendChild(street_south_img);
+
+        let street_west = document.getElementById('street_west');
+        var street_west_img = document.createElement("img");
+        street_west_img.src = "https://maps.googleapis.com/maps/api/streetview?heading=270&size=500x500&location=" + city.value + "&key=API_KEY"
+        street_west_img.setAttribute("loading", "lazy");
+        street_west.innerHTML = '';
+        var street_west_caption = document.createElement("p");
+        street_west_caption.innerHTML = 'West View';
+        street_west.appendChild(street_west_caption);
+        street_west.appendChild(street_west_img);
+
+        city.value = ''
+    }
+</script>
+<h3>At a Glance</h3>
+<p class="lead">Search your favorite location name below to get an at-a-glance view of the city from above and within.
+</p>
+
+<div class="input-group">
+    <input id="search-text" type="text" class="form-control" style="height: 50px;" placeholder="Enter location name"
+        autocomplete="off">
+    <span class="input-group-btn">
+        <button id="search-button" class="btn" type="submit"
+            style="min-height: 50px; border-radius:0; background: #243c4f; color: #fff; font-weight:600;">Search</button>
+    </span>
+</div>
+
+<p class="lead" id="interactive_map_text" hidden>Interactive Map</p>
+<div class="row" style="text-align: center">
+    <div class="col-md-12 mt-md-0 mt-3" id="frame" style="padding-bottom:10px">
+
+    </div>
+
+</div>
+
+<p class="lead" id="static_view_text" hidden>Static Aerial View</p>
+<div class="row" style="text-align: center; padding-bottom:10px">
+    <div class="col-md-6 mt-md-0 mt-3" id="static_road">
+
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3" id="static_satellite">
+
+    </div>
+</div>
+
+<div class="row" style="text-align: center; padding-bottom:10px">
+    <div class="col-md-6 mt-md-0 mt-3" id="static_terrain">
+
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3" id="static_hybrid">
+
+    </div>
+</div>
+
+<p class="lead" id="street_view_text" hidden>Static Street View</p>
+<div class="row" style="text-align: center; padding-bottom:10px">
+    <div class="col-md-6 mt-md-0 mt-3" id="street_north">
+
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3" id="street_east">
+
+    </div>
+</div>
+
+<div class="row" style="text-align: center; padding-bottom:10px">
+    <div class="col-md-6 mt-md-0 mt-3" id="street_south">
+
+    </div>
+    <div class="col-md-6 mt-md-0 mt-3" id="street_west">
+
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<script>
+  function renderItem() {
+    fetch(`https://source.unsplash.com/1600x900/?travel`).then((response) => {
+      let item = document.getElementById('welcome_image');
+      var image = document.createElement("img");
+      image.src = response.url;
+      image.setAttribute("height", "auto");
+      image.setAttribute("width", "100%");
+      image.setAttribute("display", "block");
+      image.setAttribute("margin", "auto");
+      item.appendChild(image);
+    })
+  }
+  renderItem()
+</script>
+
+<div class="jumbotron">
+  <div id="welcome_image">
+
+  </div>
+
+  <h1 class="display-4" align="center">{{ quote }}</h1>
+</div>
+
+
+{% endblock %}
